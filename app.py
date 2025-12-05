@@ -132,45 +132,41 @@ product_name = st.sidebar.selectbox("🧴 Product", filtered["Product Name"].uni
 row = filtered[filtered["Product Name"] == product_name].iloc[0]
 history = generate_history(row)
 
+
+
 # ----------------------------
-# 💎 HEADER CARD (FIXED)
+# 💎 HEADER CARD
 # ----------------------------
-header_html = f"""
-<div style="background: linear-gradient(90deg, #2c3e50 0%, #4ca1af 100%);
-            color: white; padding: 20px; border-radius: 12px; margin-bottom: 20px;">
-
-    <h1 style="margin:0; font-size:28px;">💎 {row['Product Name']}</h1>
-    <h3 style="margin:5px 0 15px 0; opacity:0.9; font-size:16px;">
-        {row['Category']} | SKU: {row['Product ID']}
-    </h3>
-
-    <div style="display: flex; justify-content: space-between; text-align: center; gap: 20px;">
-
-        <div style="background: rgba(255,255,255,0.15); padding: 12px; border-radius: 8px; flex: 1;">
-            <div style="font-size: 12px; text-transform: uppercase;">Current Price</div>
-            <div style="font-size: 26px; font-weight: bold;">₹{row['Price']:.2f}</div>
+st.markdown(
+    f"""
+    <div style="background: linear-gradient(90deg, #2c3e50 0%, #4ca1af 100%);
+                color: white; padding: 20px; border-radius: 12px; margin-bottom: 20px;">
+        <h1 style="margin:0; font-size: 28px;">💎 {row['Product Name']}</h1>
+        <h3 style="margin:5px 0 15px 0; opacity: 0.9; font-size: 16px;">
+            {row['Category']} | SKU: {row['Product ID']}
+        </h3>
+        <div style="display: flex; justify-content: space-between; text-align: center; gap: 20px;">
+            <div style="background: rgba(255,255,255,0.15); padding: 10px; border-radius: 8px; flex: 1;">
+                <div style="font-size: 12px; text-transform: uppercase;">Current Price</div>
+                <div style="font-size: 24px; font-weight: bold;">₹{row['Price']:.2f}</div>
+            </div>
+            <div style="background: rgba(255,255,255,0.15); padding: 10px; border-radius: 8px; flex: 1;">
+                <div style="font-size: 12px; text-transform: uppercase;">Competitor</div>
+                <div style="font-size: 24px; font-weight: bold; color: #ffcccc;">₹{row['Competitor_Price']:.2f}</div>
+            </div>
+            <div style="background: white; color: #2c3e50; padding: 10px; border-radius: 8px; flex: 1;">
+                <div style="font-size: 12px; text-transform: uppercase;">AI Recommended</div>
+                <div style="font-size: 24px; font-weight: bold;">₹{row['AI_Recommended_Price']:.2f}</div>
+            </div>
         </div>
-
-        <div style="background: rgba(255,255,255,0.15); padding: 12px; border-radius: 8px; flex: 1;">
-            <div style="font-size: 12px; text-transform: uppercase;">Competitor</div>
-            <div style="font-size: 26px; font-weight: bold; color:#ffcccc;">₹{row['Competitor_Price']:.2f}</div>
+        <div style="margin-top: 10px; text-align: center; font-size: 14px;">
+            🤖 <b>AI Logic:</b> {row['Pricing_Logic'] if row['Pricing_Logic'] else "Stable Market Conditions"}
         </div>
-
-        <div style="background: white; color:#2c3e50; padding: 12px; border-radius: 8px; flex: 1;">
-            <div style="font-size: 12px; text-transform: uppercase;">AI Recommended</div>
-            <div style="font-size: 26px; font-weight: bold;">₹{row['AI_Recommended_Price']:.2f}</div>
-        </div>
-
     </div>
+    """,
+    unsafe_allow_html=True
+)
 
-    <div style="margin-top: 12px; text-align: center; font-size: 14px;">
-        🤖 <b>AI Logic:</b> {row['Pricing_Logic'] if row['Pricing_Logic'] else "Stable Market Conditions"}
-    </div>
-
-</div>
-"""
-
-st.markdown(header_html, unsafe_allow_html=True)
 
 
 # ----------------------------
