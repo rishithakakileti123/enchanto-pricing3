@@ -133,37 +133,45 @@ row = filtered[filtered["Product Name"] == product_name].iloc[0]
 history = generate_history(row)
 
 # ----------------------------
-# 💎 HEADER CARD
+# 💎 HEADER CARD (FIXED)
 # ----------------------------
-st.markdown(
-    f"""
-    <div style="background: linear-gradient(90deg, #2c3e50 0%, #4ca1af 100%);
-                color: white; padding: 20px; border-radius: 12px; margin-bottom: 20px;">
-        <h1>{row['Product Name']}</h1>
-        <h3>{row['Category']} | SKU: {row['Product ID']}</h3>
+header_html = f"""
+<div style="background: linear-gradient(90deg, #2c3e50 0%, #4ca1af 100%);
+            color: white; padding: 20px; border-radius: 12px; margin-bottom: 20px;">
 
-        <div style="display: flex; justify-content: space-between;">
-            <div style="flex: 1; text-align: center;">
-                <p>Current Price</p>
-                <h2>₹{row['Price']:.2f}</h2>
-            </div>
-            <div style="flex: 1; text-align: center;">
-                <p>Competitor Price</p>
-                <h2 style="color:#ffcccc;">₹{row['Competitor_Price']:.2f}</h2>
-            </div>
-            <div style="flex: 1; text-align: center;">
-                <p>AI Recommended</p>
-                <h2 style="color:#2ecc71;">₹{row['AI_Recommended_Price']:.2f}</h2>
-            </div>
+    <h1 style="margin:0; font-size:28px;">💎 {row['Product Name']}</h1>
+    <h3 style="margin:5px 0 15px 0; opacity:0.9; font-size:16px;">
+        {row['Category']} | SKU: {row['Product ID']}
+    </h3>
+
+    <div style="display: flex; justify-content: space-between; text-align: center; gap: 20px;">
+
+        <div style="background: rgba(255,255,255,0.15); padding: 12px; border-radius: 8px; flex: 1;">
+            <div style="font-size: 12px; text-transform: uppercase;">Current Price</div>
+            <div style="font-size: 26px; font-weight: bold;">₹{row['Price']:.2f}</div>
         </div>
 
-        <p style="text-align:center; margin-top: 10px;">
-            🤖 <b>AI Logic:</b> {row['Pricing_Logic'] if row['Pricing_Logic'] else "Stable Market Conditions"}
-        </p>
+        <div style="background: rgba(255,255,255,0.15); padding: 12px; border-radius: 8px; flex: 1;">
+            <div style="font-size: 12px; text-transform: uppercase;">Competitor</div>
+            <div style="font-size: 26px; font-weight: bold; color:#ffcccc;">₹{row['Competitor_Price']:.2f}</div>
+        </div>
+
+        <div style="background: white; color:#2c3e50; padding: 12px; border-radius: 8px; flex: 1;">
+            <div style="font-size: 12px; text-transform: uppercase;">AI Recommended</div>
+            <div style="font-size: 26px; font-weight: bold;">₹{row['AI_Recommended_Price']:.2f}</div>
+        </div>
+
     </div>
-    """,
-    unsafe_allow_html=True
-)
+
+    <div style="margin-top: 12px; text-align: center; font-size: 14px;">
+        🤖 <b>AI Logic:</b> {row['Pricing_Logic'] if row['Pricing_Logic'] else "Stable Market Conditions"}
+    </div>
+
+</div>
+"""
+
+st.markdown(header_html, unsafe_allow_html=True)
+
 
 # ----------------------------
 # 📊 PLOTLY CHARTS
